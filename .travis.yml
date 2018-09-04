@@ -25,7 +25,7 @@ after_script:
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 after_success:
-  - gox -os=linux -output "dist/{{.OS}}_{{.Arch}}_{{.Dir}}"
+  - gox -output "dist/{{.OS}}_{{.Arch}}_{{.Dir}}"
 
 deploy:
   # Deploy to Github Releases
