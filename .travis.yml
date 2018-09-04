@@ -36,7 +36,7 @@ deploy:
     file_glob: true
     file: dist/*
     on:
-      repo: arnested/go-unhealthy
+      repo: arnested/go-healthy
       tags: true
   # Refresh godoc.org documentation
   - provider: script
