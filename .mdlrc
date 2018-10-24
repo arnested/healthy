@@ -1,0 +1,4 @@
+# Disable MD022 (Headers should be surrounded by blank lines) because
+# godocdown doesn't do that.
+rules "~MD022"
+

@@ -1,5 +1,3 @@
-# Wait for Docker container to become healthy
-
 [![Maintainability](https://api.codeclimate.com/v1/badges/e897778bd75491914adc/maintainability)](https://codeclimate.com/github/arnested/go-healthy/maintainability)
 [![Test Coverage](https://api.codeclimate.com/v1/badges/e897778bd75491914adc/test_coverage)](https://codeclimate.com/github/arnested/go-healthy/test_coverage)
 [![Build Status](https://travis-ci.com/arnested/go-healthy.svg?branch=master)](https://travis-ci.com/arnested/go-healthy)
