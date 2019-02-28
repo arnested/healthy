@@ -1,4 +1,4 @@
-FROM golang:1.11-alpine AS build-env
+FROM golang:1.12-alpine AS build-env
 
 WORKDIR /go/src/arnested.dk/go/healthy
 COPY *.go /go/src/arnested.dk/go/healthy/
