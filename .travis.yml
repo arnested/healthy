@@ -1,15 +1,18 @@
 language: go
 
 go:
-  - '1.11'
+  - '1.12'
+
+env:
+  global:
+    - GO111MODULE=on
 
 go_import_path: arnested.dk/go/healthy
 
 before_install:
-  - go get github.com/mitchellh/gox
-  - go get github.com/robertkrimen/godocdown/godocdown
-  - go get github.com/frapposelli/wwhrd
-  - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+  - GO111MODULE=off go get github.com/mitchellh/gox
+  - GO111MODULE=off go get github.com/robertkrimen/godocdown/godocdown
+  - GO111MODULE=off go get github.com/frapposelli/wwhrd
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
 
 before_script:
@@ -18,11 +21,12 @@ before_script:
 
 script:
   - make doc ; git diff --quiet # Check the docs are up to date
-  - dep check
-  - wwhrd check
-  - go test -race -coverprofile c.out ./...
+  - go test -v -race -coverprofile=c.out -covermode=atomic ./...
+  - ln c.out coverage.txt # Cover profile should be detected by both CodeClimate and CodeCov
+  - go mod vendor && wwhrd check
 
 after_script:
+  - rm -rf vendor
   - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 
 after_success:
