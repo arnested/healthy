@@ -17,6 +17,6 @@ FROM scratch
 
 ENV PATH=/
 
-COPY --from=build-env /go/src/arnested.dk/go/healthy/healthy /healthy
+COPY --from=build-env /build/healthy /healthy
 
 ENTRYPOINT ["healthy"]
