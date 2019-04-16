@@ -53,7 +53,7 @@ func containerHealthy(containerID string, cli *client.Client, failOnUnhealthy *b
 		return false, err
 	}
 
-	if *failOnUnhealthy == true && healthStatus == "unhealthy" {
+	if *failOnUnhealthy && healthStatus == "unhealthy" {
 		return false, errors.Errorf("%s is unhealthy", containerID)
 	}
 
