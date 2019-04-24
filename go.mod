@@ -7,7 +7,7 @@ require (
 	github.com/docker/distribution v2.7.1+incompatible
 	github.com/docker/docker v1.13.1
 	github.com/docker/go-connections v0.4.0
-	github.com/docker/go-units v0.3.3
+	github.com/docker/go-units v0.4.0
 	github.com/opencontainers/go-digest v1.0.0-rc1
 	github.com/pkg/errors v0.8.1
 	golang.org/x/net v0.0.0-20190313220215-9f648a60d977
