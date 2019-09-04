@@ -1,0 +1,19 @@
+on: push
+name: Docker build
+jobs:
+  check_not_deleted:
+    name: Ensure branch is not deleted
+    runs-on: ubuntu-latest
+    steps:
+    - name: If deleted
+      if: 'github.event.deleted'
+      run: exit
+  build:
+    name: Docker build
+    needs: check_not_deleted
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - uses: actions/docker/cli@master
+      with:
+        args: build .
