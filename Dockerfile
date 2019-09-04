@@ -6,7 +6,7 @@ ENV GO111MODULE=on
 ENV CGO_ENABLED=0
 ENV GOOS=linux
 
-RUN apk --no-cache add git=~2.20
+RUN apk --no-cache add git=~2
 
 COPY *.go go.mod go.sum /build/
 
