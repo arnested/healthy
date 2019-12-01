@@ -1,11 +1,11 @@
 language: go
 
 go:
-  - '1.12'
+  - '1.13'
 
 env:
   global:
-    - GO111MODULE=on
+    - GOFLAGS="-trimpath"
 
 go_import_path: arnested.dk/go/healthy
 

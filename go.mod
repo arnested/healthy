@@ -1,15 +1,15 @@
 module arnested.dk/go/healthy
 
-go 1.12
+go 1.13
 
 require (
-	github.com/Microsoft/go-winio v0.4.14
-	github.com/docker/distribution v2.7.1+incompatible
+	github.com/Microsoft/go-winio v0.4.14 // indirect
+	github.com/docker/distribution v2.7.1+incompatible // indirect
 	github.com/docker/docker v1.13.1
-	github.com/docker/go-connections v0.4.0
-	github.com/docker/go-units v0.4.0
-	github.com/opencontainers/go-digest v1.0.0-rc1
+	github.com/docker/go-connections v0.4.0 // indirect
+	github.com/docker/go-units v0.4.0 // indirect
+	github.com/opencontainers/go-digest v1.0.0-rc1 // indirect
 	github.com/pkg/errors v0.8.1
-	golang.org/x/net v0.0.0-20190313220215-9f648a60d977
-	golang.org/x/sys v0.0.0-20190312061237-fead79001313
+	golang.org/x/net v0.0.0-20191126235420-ef20fe5d7933 // indirect
+	golang.org/x/sys v0.0.0-20191128015809-6d18c012aee9 // indirect
 )
