@@ -1,11 +1,17 @@
 on: push
-name: Docker build
+name: Docker build and push
 jobs:
   build:
-    name: Docker build
+    name: Docker build and push
     if: '!github.event.deleted'
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@master
-    - name: Docker build
-      run: docker build .
+    - uses: actions/checkout@v2
+    - name: Build and push Docker images
+      uses: docker/build-push-action@v1.0.0
+      with:
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_TOKEN }}
+        repository: arnested/healthy
+        tag_with_ref: true
+        add_git_labels: true
