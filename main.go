@@ -1,78 +1,82 @@
-package main /* import "arnested.dk/go/healthy" */
+package main
 
 import (
 	"context"
 	"flag"
 	"fmt"
 	"os"
+	"strings"
 	"time"
 
+	"github.com/docker/docker/api/types"
 	"github.com/docker/docker/client"
-	"github.com/pkg/errors"
 )
 
 func main() {
+	since := time.Now()
+
+	flag.Usage = func() {
+		fmt.Fprintf(flag.CommandLine.Output(), "usage: %s [flags] [container_id_or_name ...]\n\nflags:\n", os.Args[0])
+		flag.PrintDefaults()
+	}
+
 	failOnUnhealthy := flag.Bool("fail-on-unhealthy", false, "fail on unhealthy")
+	timeout := flag.Duration("timeout", time.Hour, "timeout after waiting")
+
 	flag.Parse()
 
 	cli, err := client.NewEnvClient()
 	if err != nil {
-		panic(err)
+		fail(err)
 	}
 
-	allHealthy := false
+	c := Containers{}
 
-	for !allHealthy {
-		allHealthy = true
-		for _, container := range flag.Args() {
-			healthy, err := containerHealthy(container, cli, failOnUnhealthy)
+	for _, container := range flag.Args() {
+		ID, container, err := containerInfo(container, cli, since)
 
-			if err != nil {
-				fmt.Println(err)
-				os.Exit(1)
-			}
-
-			if !healthy {
-				allHealthy = false
-			}
+		if err != nil {
+			fail(err)
 		}
 
-		if !allHealthy {
-			time.Sleep(2000 * time.Millisecond)
-		}
+		c.Add(ID, *container)
 	}
 
-	if allHealthy {
+	if c.Healthy() {
 		os.Exit(0)
 	}
+
+	if err := c.Unhealthy(); err != nil && *failOnUnhealthy {
+		fail(err)
+	}
+
+	if _, err := listen(c, since, *timeout, *failOnUnhealthy); err != nil {
+		fail(err)
+	}
 }
 
-func containerHealthy(containerID string, cli *client.Client, failOnUnhealthy *bool) (bool, error) {
-	healthStatus, err := containerHealthStatus(containerID, cli)
-	if err != nil {
-		return false, err
-	}
-
-	if *failOnUnhealthy && healthStatus == "unhealthy" {
-		return false, errors.Errorf("%s is unhealthy", containerID)
-	}
-
-	if healthStatus == "healthy" {
-		return true, nil
-	}
-
-	return false, nil
-}
-
-func containerHealthStatus(containerID string, cli *client.Client) (string, error) {
+func containerInfo(containerID string, cli *client.Client, since time.Time) (string, *Container, error) {
 	info, err := cli.ContainerInspect(context.Background(), containerID)
 	if err != nil {
-		return "error", err
+		return "", nil, err
 	}
 
-	if info.State.Health == nil {
-		return "healthy", nil
+	state := types.NoHealthcheck
+
+	if info.State.Health != nil {
+		state = info.State.Health.Status
 	}
 
-	return info.State.Health.Status, nil
+	c := &Container{
+		Status:  state,
+		Changed: since,
+		Name:    strings.TrimLeft(info.Name, "/"),
+	}
+
+	return info.ID, c, nil
+}
+
+func fail(err error) {
+	fmt.Fprintf(flag.CommandLine.Output(), "%s", err)
+	os.Exit(1)
 }

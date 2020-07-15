@@ -16,8 +16,6 @@ RUN upx healthy
 
 FROM scratch
 
-ENV PATH=/
-
 COPY --from=build-env /build/healthy /healthy
 
-ENTRYPOINT ["healthy"]
+ENTRYPOINT ["/healthy"]

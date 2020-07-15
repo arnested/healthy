@@ -8,3 +8,4 @@ whitelist:
 
 exceptions:
   - github.com/opencontainers/go-digest # Uses Apache License Version 2.0
+  - github.com/gogo/protobuf/proto # Uses a BSD-3-Clause
