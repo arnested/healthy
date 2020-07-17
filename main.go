@@ -34,7 +34,6 @@ func main() {
 
 	for _, container := range flag.Args() {
 		ID, container, err := containerInfo(container, cli, since)
-
 		if err != nil {
 			fail(err)
 		}

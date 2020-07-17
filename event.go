@@ -18,8 +18,10 @@ func (e Error) Error() string {
 	return string(e)
 }
 
-const timeoutError Error = "timeout while waiting for containers to be healthy"
-const unhealthyError Error = "containers are unhealthy"
+const (
+	timeoutError   Error = "timeout while waiting for containers to be healthy"
+	unhealthyError Error = "containers are unhealthy"
+)
 
 func listen(c Containers, since time.Time, timeout time.Duration, failOnUnhealthy bool) (bool, error) {
 	cli, err := client.NewEnvClient()
