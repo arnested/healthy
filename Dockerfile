@@ -11,7 +11,7 @@ RUN apk --no-cache add git=~2
 COPY *.go go.mod go.sum /build/
 
 RUN go version
-RUN go build -ldflags '-s -w'
+RUN go build
 
 FROM scratch
 
