@@ -1,0 +1,65 @@
+before:
+  hooks:
+    - go mod download
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - arm64
+
+archives:
+  - format: binary
+    name_template: "{{ .ProjectName }}_{{ .Os }}_{{ .Arch }}"
+    # replacements:
+    #   darwin: Darwin
+    #   linux: Linux
+    #   windows: Windows
+    #   386: i386
+    #   amd64: x86_64
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  name_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+release:
+  prerelease: auto
+  draft: true
+  github:
+    owner: arnested
+    name: healthy
+
+milestones:
+  -
+    repo:
+      owner: arnested
+      name: healthy
+
+dockers:
+  - image_templates:
+      - "arnested/healthy:{{ .Version }}-amd64"
+    use_buildx: true
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - "--platform=linux/amd64"
+  - image_templates:
+      - "arnested/healthy:{{ .Version }}-arm64v8"
+    use_buildx: true
+    goarch: arm64
+    dockerfile: Dockerfile
+    build_flag_templates:
+      - "--platform=linux/arm64/v8"
+
+docker_manifests:
+  -
+    name_template: arnested/healthy:{{ .Version }}
+    image_templates:
+      - arnested/healthy:{{ .Version }}-amd64
+      - arnested/healthy:{{ .Version }}-arm64v8
