@@ -41,17 +41,17 @@ deploy:
     file_glob: true
     file: dist/*
     on:
-      repo: arnested/go-healthy
+      repo: arnested/healthy
       tags: true
   # Refresh godoc.org documentation
   - provider: script
     script: 'curl --silent -X POST -H "Content-Type: application/x-www-form-urlencoded" https://godoc.org/-/refresh --data "path=arnested.dk%2Fgo%2Fhealthy"'
     on:
-      repo: arnested/go-healthy
+      repo: arnested/healthy
       branch: master
   # Refresh goreportcard.com report
   - provider: script
     script: 'curl --silent -X POST -H "Content-Type: application/x-www-form-urlencoded" https://goreportcard.com/checks --data "repo=arnested.dk%2Fgo%2Fhealthy"'
     on:
-      repo: arnested/go-healthy
+      repo: arnested/healthy
       branch: master
