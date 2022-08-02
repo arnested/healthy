@@ -23,6 +23,7 @@ jobs:
         WITH_V: true
         DEFAULT_BUMP: patch
         RELEASE_BRANCHES: main
+        DRY_RUN: true
     - name: Create release
       uses: actions/github-script@v6
       env:
