@@ -1,5 +1,4 @@
 [![Docker image size](https://badgen.net/docker/size/arnested/healthy)](https://hub.docker.com/r/arnested/healthy)
-[![Release](https://img.shields.io/github/release/arnested/go-healthy.svg)](https://github.com/arnested/go-healthy/releases/latest)
 [![CLA assistant](https://cla-assistant.io/readme/badge/arnested/go-healthy)](https://cla-assistant.io/arnested/go-healthy)
 [![GoDoc](https://godoc.org/arnested.dk/go/healthy?status.svg)](https://pkg.go.dev/arnested.dk/go/healthy)
 
