@@ -1,8 +1,10 @@
 name: Release
 on:
-  push:
-    branches:
-    - main
+  workflow_run:
+    workflows: ["Docker build and push"]
+    branches: [main]
+    types:
+      - completed
 permissions:
   contents: write
   actions: read
