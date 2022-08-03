@@ -1,5 +1,4 @@
 /*
-
 Command healthy waits for Docker container(s) to become healthy.
 
 The command takes one or more container ID's as argument(s) and will
@@ -35,6 +34,5 @@ To wait no longer than one and half minute for containers to be healthy:
 You can also run healthy using a Docker image:
 
 	docker run --rm -v /var/run/docker.sock:/var/run/docker.sock:ro arnested/healthy $(docker-compose ps -q)
-
 */
 package main
