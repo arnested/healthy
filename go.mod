@@ -2,7 +2,7 @@ module arnested.dk/go/healthy
 
 go 1.19
 
-require github.com/docker/docker v20.10.20+incompatible
+require github.com/docker/docker v20.10.21+incompatible
 
 require (
 	github.com/Microsoft/go-winio v0.5.2 // indirect
