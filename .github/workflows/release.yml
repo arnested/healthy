@@ -22,7 +22,7 @@ jobs:
         GITHUB_TOKEN: ${{ github.token }}
         WITH_V: true
         DEFAULT_BUMP: patch
-        RELEASE_BRANCHES: main
+        DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         DRY_RUN: true
     - name: Create release
       uses: actions/github-script@v6
