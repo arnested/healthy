@@ -43,8 +43,6 @@ jobs:
           } catch (error) {
             core.setFailed(error.message);
           }
-    - name: Go proxy warming
-      uses: andrewslotin/go-proxy-pull-action@v1.0.3
   docker-build:
     name: Docker build and push
     runs-on: ubuntu-latest
