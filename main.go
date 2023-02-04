@@ -25,7 +25,10 @@ func main() {
 
 	flag.Parse()
 
-	cli, err := client.NewClientWithOpts(client.FromEnv)
+	cli, err := client.NewClientWithOpts(
+		client.FromEnv,
+		client.WithAPIVersionNegotiation(),
+	)
 	if err != nil {
 		fail(err)
 	}

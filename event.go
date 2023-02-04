@@ -24,7 +24,10 @@ const (
 )
 
 func listen(c Containers, since time.Time, timeout time.Duration, failOnUnhealthy bool) (bool, error) {
-	cli, err := client.NewClientWithOpts(client.FromEnv)
+	cli, err := client.NewClientWithOpts(
+		client.FromEnv,
+		client.WithAPIVersionNegotiation(),
+	)
 	if err != nil {
 		return false, err
 	}
