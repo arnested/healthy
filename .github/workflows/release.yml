@@ -25,7 +25,7 @@ jobs:
         DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
         DRY_RUN: true
     - name: Create release
-      uses: actions/github-script@v6
+      uses: actions/github-script@v7
       env:
         RELEASE_TAG: ${{ steps.version.outputs.new_tag }}
       with:
