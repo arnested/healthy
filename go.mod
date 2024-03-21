@@ -2,7 +2,7 @@ module arnested.dk/go/healthy
 
 go 1.19
 
-require github.com/docker/docker v25.0.5+incompatible
+require github.com/docker/docker v26.0.0+incompatible
 
 require (
 	github.com/Microsoft/go-winio v0.6.1 // indirect
@@ -14,6 +14,7 @@ require (
 	github.com/go-logr/logr v1.4.1 // indirect
 	github.com/go-logr/stdr v1.2.2 // indirect
 	github.com/gogo/protobuf v1.3.2 // indirect
+	github.com/moby/docker-image-spec v1.3.1 // indirect
 	github.com/moby/term v0.0.0-20210619224110-3f7ff695adc6 // indirect
 	github.com/morikuni/aec v1.0.0 // indirect
 	github.com/opencontainers/go-digest v1.0.0 // indirect
