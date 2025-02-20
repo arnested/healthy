@@ -17,29 +17,29 @@ type Container struct {
 type Containers map[string]Container
 
 // Add a container to the list of monitored containers.
-func (c *Containers) Add(id string, new Container) {
+func (c *Containers) Add(containerID string, newContainer Container) {
 	// Is container already in containers?
-	existing, ok := (*c)[id]
+	existing, ok := (*c)[containerID]
 
 	if !ok {
-		(*c)[id] = new
+		(*c)[containerID] = newContainer
 
 		return
 	}
 
 	// This is an old state (we know a newer state). Ignore and
 	// return.
-	if existing.Changed.After(new.Changed) {
+	if existing.Changed.After(newContainer.Changed) {
 		return
 	}
 
 	// Remember the new state.
-	(*c)[id] = new
+	(*c)[containerID] = newContainer
 }
 
 // Healthy if all containers are healthy.
-func (c Containers) Healthy() bool {
-	for _, container := range c {
+func (c *Containers) Healthy() bool {
+	for _, container := range *c {
 		if container.Status != types.Healthy && container.Status != types.NoHealthcheck {
 			return false
 		}
@@ -49,12 +49,12 @@ func (c Containers) Healthy() bool {
 }
 
 // Unhealthy if one of the containers get unhealthy.
-func (c Containers) Unhealthy() error {
-	for _, container := range c {
+func (c *Containers) Unhealthy() error {
+	for _, container := range *c {
 		if container.Status == types.Unhealthy {
 			return fmt.Errorf(
 				"%w: %s",
-				unhealthyError,
+				errUnhealthy,
 				strings.Join(c.UnhealtyContainers(), ", "),
 			)
 		}
@@ -64,10 +64,10 @@ func (c Containers) Unhealthy() error {
 }
 
 // NonHealtyContainers returns a list of container names of containers that are not healthy (yet).
-func (c Containers) NonHealtyContainers() []string {
+func (c *Containers) NonHealtyContainers() []string {
 	var nonHealthy []string
 
-	for _, container := range c {
+	for _, container := range *c {
 		if container.Status != types.Healthy && container.Status != types.NoHealthcheck {
 			nonHealthy = append(nonHealthy, container.Name)
 		}
@@ -77,10 +77,10 @@ func (c Containers) NonHealtyContainers() []string {
 }
 
 // UnhealtyContainers returns a list of container names of containers that are not healthy (yet).
-func (c Containers) UnhealtyContainers() []string {
+func (c *Containers) UnhealtyContainers() []string {
 	var unhealthy []string
 
-	for _, container := range c {
+	for _, container := range *c {
 		if container.Status == types.Unhealthy {
 			unhealthy = append(unhealthy, container.Name)
 		}

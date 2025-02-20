@@ -19,24 +19,24 @@ func (e Error) Error() string {
 }
 
 const (
-	timeoutError   Error = "timeout while waiting for containers to be healthy"
-	unhealthyError Error = "containers are unhealthy"
+	errTimeout   Error = "timeout while waiting for containers to be healthy"
+	errUnhealthy Error = "containers are unhealthy"
 )
 
-func listen(c Containers, since time.Time, timeout time.Duration, failOnUnhealthy bool) (bool, error) {
+func listen(containers Containers, since time.Time, timeout time.Duration, failOnUnhealthy bool) (bool, error) {
 	cli, err := client.NewClientWithOpts(
 		client.FromEnv,
 		client.WithAPIVersionNegotiation(),
 	)
 	if err != nil {
-		return false, err
+		return false, fmt.Errorf("creating Docker client: %w", err)
 	}
 
 	filter := filters.NewArgs()
 	filter.Add("type", "container")
 	filter.Add("event", "health_status")
 
-	for id := range c {
+	for id := range containers {
 		filter.Add("container", id)
 	}
 
@@ -60,21 +60,21 @@ func listen(c Containers, since time.Time, timeout time.Duration, failOnUnhealth
 				Changed: time.Unix(msg.Time, msg.TimeNano),
 			}
 
-			c.Add(msg.ID, container)
+			containers.Add(msg.ID, container)
 
-			if c.Healthy() {
+			if containers.Healthy() {
 				return true, nil
 			}
 
-			if err := c.Unhealthy(); err != nil && failOnUnhealthy {
+			if err := containers.Unhealthy(); err != nil && failOnUnhealthy {
 				return false, err
 			}
 		case <-timeoutChan:
 			return false, fmt.Errorf(
 				"%w (%s): %s",
-				timeoutError,
+				errTimeout,
 				timeout,
-				strings.Join(c.NonHealtyContainers(), ", "),
+				strings.Join(containers.NonHealtyContainers(), ", "),
 			)
 		}
 	}
