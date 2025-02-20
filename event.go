@@ -7,7 +7,7 @@ import (
 	"strings"
 	"time"
 
-	"github.com/docker/docker/api/types"
+	"github.com/docker/docker/api/types/events"
 	"github.com/docker/docker/api/types/filters"
 	"github.com/docker/docker/client"
 )
@@ -43,7 +43,7 @@ func listen(c Containers, since time.Time, timeout time.Duration, failOnUnhealth
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	msgs, errs := cli.Events(ctx, types.EventsOptions{
+	msgs, errs := cli.Events(ctx, events.ListOptions{
 		Filters: filter,
 		Since:   strconv.FormatInt(since.Unix(), 10),
 	})
