@@ -33,7 +33,7 @@ func main() {
 		fail(err)
 	}
 
-	c := Containers{}
+	containers := Containers{}
 
 	for _, container := range flag.Args() {
 		ID, container, err := containerInfo(container, cli, since)
@@ -41,18 +41,18 @@ func main() {
 			fail(err)
 		}
 
-		c.Add(ID, *container)
+		containers.Add(ID, *container)
 	}
 
-	if c.Healthy() {
+	if containers.Healthy() {
 		os.Exit(0)
 	}
 
-	if err := c.Unhealthy(); err != nil && *failOnUnhealthy {
+	if err := containers.Unhealthy(); err != nil && *failOnUnhealthy {
 		fail(err)
 	}
 
-	if _, err := listen(c, since, *timeout, *failOnUnhealthy); err != nil {
+	if _, err := listen(containers, since, *timeout, *failOnUnhealthy); err != nil {
 		fail(err)
 	}
 }
@@ -60,7 +60,7 @@ func main() {
 func containerInfo(containerID string, cli *client.Client, since time.Time) (string, *Container, error) {
 	info, err := cli.ContainerInspect(context.Background(), containerID)
 	if err != nil {
-		return "", nil, err
+		return "", nil, fmt.Errorf("inspecting container: %w", err)
 	}
 
 	state := types.NoHealthcheck
@@ -69,13 +69,13 @@ func containerInfo(containerID string, cli *client.Client, since time.Time) (str
 		state = info.State.Health.Status
 	}
 
-	c := &Container{
+	container := &Container{
 		Status:  state,
 		Changed: since,
 		Name:    strings.TrimLeft(info.Name, "/"),
 	}
 
-	return info.ID, c, nil
+	return info.ID, container, nil
 }
 
 func fail(err error) {
