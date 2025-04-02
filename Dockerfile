@@ -1,4 +1,4 @@
-FROM golang:1.24.1-alpine AS build-env
+FROM golang:1.24.2-alpine AS build-env
 
 WORKDIR /build
 
