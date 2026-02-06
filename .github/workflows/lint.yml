@@ -1,0 +1,32 @@
+---
+name: Lint
+on:
+  - pull_request
+  - push
+
+permissions:
+  contents: read
+  pull-requests: write
+
+jobs:
+  actionlint:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - uses: reviewdog/action-actionlint@v1
+  markdownlint:
+    name: markdown
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - name: Run markdownlint
+        uses: DavidAnson/markdownlint-cli2-action@v22
+  yamllint:
+    name: Yamllint
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v6
+      - name: Run Yamllint
+        uses: frenck/action-yamllint@v1.5.0
+        with:
+          strict: true

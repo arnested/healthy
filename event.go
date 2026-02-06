@@ -56,17 +56,18 @@ func listen(containers Containers, since time.Time, timeout time.Duration, failO
 			return false, err
 		case msg := <-msgs:
 			container := Container{
-				Status:  msg.Status[15:],
+				Status:  string(msg.Action)[15:],
 				Changed: time.Unix(msg.Time, msg.TimeNano),
 			}
 
-			containers.Add(msg.ID, container)
+			containers.Add(msg.Actor.ID, container)
 
 			if containers.Healthy() {
 				return true, nil
 			}
 
-			if err := containers.Unhealthy(); err != nil && failOnUnhealthy {
+			err := containers.Unhealthy()
+			if err != nil && failOnUnhealthy {
 				return false, err
 			}
 		case <-timeoutChan:

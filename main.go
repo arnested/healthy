@@ -48,11 +48,13 @@ func main() {
 		os.Exit(0)
 	}
 
-	if err := containers.Unhealthy(); err != nil && *failOnUnhealthy {
+	err = containers.Unhealthy()
+	if err != nil && *failOnUnhealthy {
 		fail(err)
 	}
 
-	if _, err := listen(containers, since, *timeout, *failOnUnhealthy); err != nil {
+	_, err = listen(containers, since, *timeout, *failOnUnhealthy)
+	if err != nil {
 		fail(err)
 	}
 }
