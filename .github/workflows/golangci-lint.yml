@@ -1,17 +1,23 @@
 ---
 name: golangci-lint
-on: pull_request
+on:
+  pull_request:
 permissions:
   contents: read
   pull-requests: write
 jobs:
   golangci:
-    name: lint
+    name: Lint
     runs-on: ubuntu-24.04
     steps:
       - uses: actions/checkout@v6
+      - name: Setup Go
+        uses: arnested/setup-go@rc
+        with:
+          go-version-file: go.mod
       - name: golangci-lint
         uses: golangci/golangci-lint-action@v9
         with:
           version: latest
+          install-mode: goinstall
           only-new-issues: true
