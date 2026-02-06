@@ -2,7 +2,7 @@
 
 [![Docker image size](https://badgen.net/docker/size/arnested/healthy)](https://hub.docker.com/r/arnested/healthy)
 [![CLA assistant](https://cla-assistant.io/readme/badge/arnested/go-healthy)](https://cla-assistant.io/arnested/go-healthy)
-[![GoDoc](https://godoc.org/arnested.dk/go/healthy?status.svg)](https://pkg.go.dev/arnested.dk/go/healthy)
+[![GoDoc](https://pkg.go.dev/badge/arnested.dk/go/healthy)](https://pkg.go.dev/arnested.dk/go/healthy)
 
 Command healthy waits for Docker container(s) to become healthy.
 
