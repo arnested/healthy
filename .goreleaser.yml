@@ -1,0 +1,52 @@
+---
+version: 2
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    flags:
+      - -trimpath
+    ldflags:
+      - -s -w -X main.version={{.Tag}} -X main.Date={{.CommitDate}}
+    mod_timestamp: '{{.CommitTimestamp}}'
+archives:
+  - formats:
+      - binary
+    name_template: >-
+      {{ .ProjectName }}_
+      {{- if eq .Os "linux" }}Linux
+      {{- else }}{{ .Os }}{{ end }}_
+      {{- if eq .Arch "amd64" }}x86_64
+      {{- else if eq .Arch "386" }}i386
+      {{- else }}{{ .Arch }}{{ end }}
+checksum:
+  name_template: 'checksums.txt'
+snapshot:
+  version_template: "{{ .Tag }}-next"
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
+release:
+  prerelease: auto
+
+dockers_v2:
+  - images:
+      - 'arnested/{{ .ProjectName }}'
+    tags:
+      - '{{ .Tag }}'
+      - 'v{{ .Major }}'
+      - 'latest'
+    sbom: true
+    labels:
+      "org.opencontainers.image.created": "{{.CommitDate}}"
+      "org.opencontainers.image.revision": "{{.FullCommit}}"
+      "org.opencontainers.image.source": "https://github.com/arnested/{{.ProjectName}}"
+      "org.opencontainers.image.title": "healthy"
+      "org.opencontainers.image.description": "Command healthy waits for Docker container(s) to become healthy"
+      "org.opencontainers.image.version": "{{.Version}}"
+      "org.opencontainers.image.licenses": "MIT"
+      "org.opencontainers.image.authors": "Arne Jørgensen <arne@arnested.dk>"
