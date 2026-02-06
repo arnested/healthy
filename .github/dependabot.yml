@@ -1,29 +1,30 @@
+---
 version: 2
 updates:
-- package-ecosystem: docker
-  directory: "/"
-  schedule:
-    interval: daily
-    time: '04:00'
-    timezone: Europe/Copenhagen
-  open-pull-requests-limit: 10
-  assignees:
-  - arnested
-- package-ecosystem: github-actions
-  directory: "/"
-  schedule:
-    interval: daily
-    time: '04:00'
-    timezone: Europe/Copenhagen
-  open-pull-requests-limit: 10
-  assignees:
-  - arnested
-- package-ecosystem: gomod
-  directory: "/"
-  schedule:
-    interval: daily
-    time: '04:00'
-    timezone: Europe/Copenhagen
-  open-pull-requests-limit: 10
-  assignees:
-  - arnested
+  - package-ecosystem: docker
+    directory: "/"
+    schedule:
+      interval: daily
+      time: '04:00'
+      timezone: Europe/Copenhagen
+    open-pull-requests-limit: 10
+    assignees:
+      - arnested
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: daily
+      time: '04:00'
+      timezone: Europe/Copenhagen
+    open-pull-requests-limit: 10
+    assignees:
+      - arnested
+  - package-ecosystem: gomod
+    directory: "/"
+    schedule:
+      interval: daily
+      time: '04:00'
+      timezone: Europe/Copenhagen
+    open-pull-requests-limit: 10
+    assignees:
+      - arnested

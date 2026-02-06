@@ -1,9 +1,9 @@
+# healthy
+
 [![Docker image size](https://badgen.net/docker/size/arnested/healthy)](https://hub.docker.com/r/arnested/healthy)
 [![CLA assistant](https://cla-assistant.io/readme/badge/arnested/go-healthy)](https://cla-assistant.io/arnested/go-healthy)
 [![GoDoc](https://godoc.org/arnested.dk/go/healthy?status.svg)](https://pkg.go.dev/arnested.dk/go/healthy)
 
-# healthy
---
 Command healthy waits for Docker container(s) to become healthy.
 
 The command takes one or more container ID's as argument(s) and will not exit
@@ -18,9 +18,9 @@ return code 0.
 
     flags:
       -fail-on-unhealthy
-    	fail on unhealthy
+        fail on unhealthy
       -timeout duration
-    	timeout after waiting (default 1h0m0s)
+        timeout after waiting (default 1h0m0s)
 
 In a docker-compose setup you could wait for all services to be healthy by
 running:
