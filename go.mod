@@ -1,6 +1,6 @@
 module arnested.dk/go/healthy
 
-go 1.26.4
+go 1.27rc1
 
 require github.com/docker/docker v28.5.2+incompatible
 
