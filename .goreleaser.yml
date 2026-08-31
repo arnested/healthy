@@ -42,7 +42,7 @@ dockers_v2:
       - 'latest'
     sbom: true
     annotations:
-      "org.opencontainers.image.created": {{ .CommitDate }}
+      "org.opencontainers.image.created": "{{ .CommitDate }}"
     labels:
       "org.opencontainers.image.created": "{{.CommitDate}}"
       "org.opencontainers.image.revision": "{{.FullCommit}}"
